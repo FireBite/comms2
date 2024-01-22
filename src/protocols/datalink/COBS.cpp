@@ -79,7 +79,7 @@ namespace Comms2
             distance--;
         }
 
-        readBytes = pos;
+        readBytes = pos + 1;
 
         // Remove additional bytes added by the encoding
         data.erase(data.begin()); // Remove first offset to the next frame separator

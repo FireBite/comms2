@@ -16,6 +16,8 @@ enable_testing()
 add_executable(
   libcomms2_tests
   tests/FTPFrame.cpp
+  tests/COBS.cpp
+  tests/EncoderParser.cpp
 )
 target_link_libraries(
   libcomms2_tests
