@@ -31,3 +31,4 @@ endif()
 
 # Build examples
 add_subdirectory(examples/demo)
+add_subdirectory(examples/cli)
