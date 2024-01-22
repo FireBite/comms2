@@ -2,11 +2,6 @@
 
 namespace Comms2
 {
-    /*
-        COBS encoding algorithm.
-        \param data The data to encode frame to, must be at least 2 bytes longer than the data. 
-        \returns OK if the frame is valid. Otherwise PROTOCOL_FRAME_ERROR on invalid frame or BUFFER_ERROR if the data buffer is too small or empty.
-    */
     Comms2::Error COBS::encode(etl::ivector<uint8_t>& data)
     {
         // Check if the data is valid
@@ -41,14 +36,6 @@ namespace Comms2
         return Comms2::Error::OK;
     }
 
-
-    /*
-        COBS decoding algorithm.
-        This is a more reinforced version of the original algorithm.
-        \param data The data to decode, will be modified in-place.
-        \param readBytes The number of bytes read from the data buffer.
-        \returns OK if the frame is valid. Otherwise PROTOCOL_FRAME_ERROR on invalid frame or NOT_ENOUGH_DATA if the frame hasn't been fully received.
-    */
     Comms2::Error COBS::decode(etl::ivector<uint8_t>& data, size_t& readBytes)
     {
         // Check if we have enough data to decode
@@ -97,12 +84,6 @@ namespace Comms2
         return Comms2::Error::PROTOCOL_FRAME_ERROR;
     }
 
-    /*
-        COBS decoding algorithm.
-        This is a more reinforced version of the original algorithm.
-        \param data The data to decode, will be modified in-place.
-        \returns OK if the frame is valid. Otherwise PROTOCOL_FRAME_ERROR on invalid frame or NOT_ENOUGH_DATA if the frame hasn't been fully received.
-    */
     Comms2::Error COBS::decode(etl::ivector<uint8_t>& data)
     {
         size_t readBytes;
