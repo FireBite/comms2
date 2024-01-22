@@ -46,9 +46,10 @@ namespace Comms2
         COBS decoding algorithm.
         This is a more reinforced version of the original algorithm.
         \param data The data to decode, will be modified in-place.
+        \param readBytes The number of bytes read from the data buffer.
         \returns OK if the frame is valid. Otherwise PROTOCOL_FRAME_ERROR on invalid frame or NOT_ENOUGH_DATA if the frame hasn't been fully received.
     */
-    Comms2::Error COBS::decode(etl::ivector<uint8_t>& data)
+    Comms2::Error COBS::decode(etl::ivector<uint8_t>& data, size_t& readBytes)
     {
         // Check if we have enough data to decode
         // Offset to next frame separator + 1 data byte + frame separator
@@ -78,6 +79,8 @@ namespace Comms2
             distance--;
         }
 
+        readBytes = pos;
+
         // Remove additional bytes added by the encoding
         data.erase(data.begin()); // Remove first offset to the next frame separator
         data.pop_back();          // Remove frame separator after the data
@@ -92,5 +95,17 @@ namespace Comms2
 
         // The frame is invalid as the distance is not 0 by the time end of the frame is reached
         return Comms2::Error::PROTOCOL_FRAME_ERROR;
+    }
+
+    /*
+        COBS decoding algorithm.
+        This is a more reinforced version of the original algorithm.
+        \param data The data to decode, will be modified in-place.
+        \returns OK if the frame is valid. Otherwise PROTOCOL_FRAME_ERROR on invalid frame or NOT_ENOUGH_DATA if the frame hasn't been fully received.
+    */
+    Comms2::Error COBS::decode(etl::ivector<uint8_t>& data)
+    {
+        size_t readBytes;
+        return decode(data, readBytes);
     }
 }

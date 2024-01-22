@@ -17,17 +17,22 @@ namespace Comms2
     Comms2::Error Parser::parseFromBuf(FTPFrame& frame)
     {
         // Read new data from the input buffer
-        while (!_inputBuffer->hasNewData()) 
+        while (_inputBuffer->hasNewData())
+        {
             _decodeBuffer.push_back(_inputBuffer->read());
+        }
 
         etl::vector<uint8_t, 2 * Comms2::FRAME_MTU> datagram = _decodeBuffer;
 
         // Decode COBS
-        Comms2::Error res = COBS::decode(datagram);
+        size_t readBytes;
+        Comms2::Error res = COBS::decode(datagram, readBytes);
 
         switch (res)
         {
             case Comms2::Error::OK:
+                // Remove the decoded bytes from the buffer
+                _decodeBuffer.erase(_decodeBuffer.begin(), _decodeBuffer.begin() + readBytes);
                 break;
             // Discard buffer on invalid frame
             case Comms2::Error::PROTOCOL_FRAME_ERROR:
