@@ -2,7 +2,7 @@
 
 namespace Comms2
 {
-    Comms2::Error ProtocolDispatcher::registerProtocol(Protocol& protocol, uint8_t protocolId, ProtocolCallback handler)
+    Comms2::Error ProtocolDispatcher::registerProtocol(uint8_t protocolId, ProtocolCallback handler)
     {
         // Check if the protocol can be registered
         if (!handler.is_valid())
@@ -17,7 +17,7 @@ namespace Comms2
         // Register the protocol
         ProtocolEntry entry
         {
-            .protocol = &protocol,
+            .protocolId = protocolId,
             .handler = handler
         };
 

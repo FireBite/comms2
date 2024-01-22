@@ -10,3 +10,6 @@ target_link_libraries(cobs PUBLIC etl::etl comms2)
 
 add_executable(serialize_buffers serialize_buffers.cpp)
 target_link_libraries(serialize_buffers PUBLIC etl::etl comms2)
+
+add_executable(dispatcher dispatcher.cpp)
+target_link_libraries(dispatcher PUBLIC etl::etl comms2)

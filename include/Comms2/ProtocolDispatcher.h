@@ -5,7 +5,6 @@
 #include "etl/utility.h"
 #include "etl/delegate.h"
 
-#include "Comms2/protocols/application/Protocol.h"
 #include "Comms2/Error.h"
 #include "Comms2/protocols/datalink/FTPFrame.h"
 
@@ -16,7 +15,7 @@ namespace Comms2
     class ProtocolEntry
     {
     public:
-        Protocol* protocol;
+        uint8_t protocolId;
         ProtocolCallback handler;
     };
 
@@ -27,7 +26,7 @@ namespace Comms2
         ProtocolCallback catchAllHandler;
     public:
         ProtocolDispatcher() {};
-        Comms2::Error registerProtocol(Protocol& protocol, uint8_t protocolId, ProtocolCallback handler);
+        Comms2::Error registerProtocol(uint8_t protocolId, ProtocolCallback handler);
         Comms2::Error registerCatchAllHandler(ProtocolCallback handler);
         Comms2::Error dispatchFrame(FTPFrame& frame);
     };
